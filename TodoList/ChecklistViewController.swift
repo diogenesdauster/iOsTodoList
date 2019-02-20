@@ -17,18 +17,27 @@ class ChecklistViewController: UITableViewController {
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 1000
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for:  indexPath)
         
         if let label = cell.viewWithTag(1000) as? UILabel {
-            if indexPath.row == 0 {
-                label.text = "Run 5km"
-            }else{
+            switch( indexPath.row % 5){
+            case 0 :
+                label.text = "Take a Job"
+            case 1 :
+                label.text = "Watch a movie"
+            case 2 :
+                label.text = "Code an App"
+            case 3 :
+                label.text = "Walk the Dog"
+            case 4 :
+                label.text = "Study Design patterns"
+            default:
                 label.text = "Only Sleep"
-            }
+            }            
         }
         
         return cell
