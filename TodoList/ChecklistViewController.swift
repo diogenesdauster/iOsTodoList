@@ -10,7 +10,7 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
     
-    var row0Item: ChecklistItem
+    var todoList: TodoList
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,63 +18,46 @@ class ChecklistViewController: UITableViewController {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        row0Item = ChecklistItem()
-        row0Item.text = "Take a Job"
+        todoList = TodoList()
         super.init(coder: aDecoder)
     }
     
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1000
+        return todoList.todos.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for:  indexPath)
         
         if let label = cell.viewWithTag(1000) as? UILabel {
-            switch( indexPath.row % 5){
-            case 0 :
-                label.text = "Take a Job"
-            case 1 :
-                label.text = "Watch a movie"
-            case 2 :
-                label.text = "Code an App"
-            case 3 :
-                label.text = "Walk the Dog"
-            case 4 :
-                label.text = "Study Design patterns"
-            default:
-                label.text = "Only Sleep"
-            }
-            
-            if indexPath.row == 0 {
-                label.text = row0Item.text
-            }
+             label.text = todoList.todos[indexPath.row].text
         }
+        
+        configurateChekItem(for: cell, at: indexPath)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
-            
-            if indexPath.row == 0 {
-                if row0Item.checked {
-                    cell.accessoryType = .checkmark
-                }else{
-                    cell.accessoryType = .none
-                }
-                row0Item.checked = !row0Item.checked
-            }else {
-                if cell.accessoryType == .none {
-                    cell.accessoryType = .checkmark
-                }else{
-                    cell.accessoryType = .none
-                }
-            }
-            
+            configurateChekItem(for: cell, at: indexPath)
             tableView.deselectRow(at: indexPath, animated: true)
         }
+    }
+    
+    
+    func configurateChekItem(for cell:UITableViewCell,at indexPath: IndexPath){
+        let isChecked = todoList.todos[indexPath.row].checked
+        
+        if isChecked  {
+            cell.accessoryType = .checkmark
+        }else{
+            cell.accessoryType = .none
+        }
+        
+        todoList.todos[indexPath.row].checked = !isChecked
+        
     }
 
 }
