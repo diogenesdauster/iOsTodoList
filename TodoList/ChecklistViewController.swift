@@ -9,10 +9,18 @@
 import UIKit
 
 class ChecklistViewController: UITableViewController {
+    
+    var row0Item: ChecklistItem
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        row0Item = ChecklistItem()
+        row0Item.text = "Take a Job"
+        super.init(coder: aDecoder)
     }
     
 
@@ -37,7 +45,11 @@ class ChecklistViewController: UITableViewController {
                 label.text = "Study Design patterns"
             default:
                 label.text = "Only Sleep"
-            }            
+            }
+            
+            if indexPath.row == 0 {
+                label.text = row0Item.text
+            }
         }
         
         return cell
@@ -45,11 +57,22 @@ class ChecklistViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let cell = tableView.cellForRow(at: indexPath) {
-            if cell.accessoryType == .none {
-                cell.accessoryType = .checkmark
-            }else{
-                cell.accessoryType = .none
+            
+            if indexPath.row == 0 {
+                if row0Item.checked {
+                    cell.accessoryType = .checkmark
+                }else{
+                    cell.accessoryType = .none
+                }
+                row0Item.checked = !row0Item.checked
+            }else {
+                if cell.accessoryType == .none {
+                    cell.accessoryType = .checkmark
+                }else{
+                    cell.accessoryType = .none
+                }
             }
+            
             tableView.deselectRow(at: indexPath, animated: true)
         }
     }
