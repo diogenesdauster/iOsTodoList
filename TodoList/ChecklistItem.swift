@@ -12,4 +12,9 @@ import Foundation
 class ChecklistItem {
     var text = ""
     var checked = false
+    
+    func toogle(){
+        checked = !checked
+    }
+    
 }
