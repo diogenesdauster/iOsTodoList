@@ -20,6 +20,8 @@ class ChecklistViewController: UITableViewController {
     required init?(coder aDecoder: NSCoder) {
         todoList = TodoList()
         super.init(coder: aDecoder)
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
 
