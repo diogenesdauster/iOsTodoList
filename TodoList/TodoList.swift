@@ -32,4 +32,12 @@ class TodoList {
         todos.append(row04Item)
         todos.append(row05Item)
     }
+    
+    func newTodo() -> ChecklistItem {
+        let item = ChecklistItem()
+        item.text = "My new Todo"        
+        todos.append(item)
+        return item
+        
+    }
 }

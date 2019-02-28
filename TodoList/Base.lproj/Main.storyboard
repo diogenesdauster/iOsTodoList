@@ -49,7 +49,7 @@
                     <navigationItem key="navigationItem" title="CheckLists" id="m0Y-k9-Urm">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Lsg-6q-Eo3">
                             <connections>
-                                <action selector="addTodo" destination="feh-eL-h1G" id="LaJ-R0-Fea"/>
+                                <action selector="addTodo:" destination="feh-eL-h1G" id="1hE-Iz-fMS"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
