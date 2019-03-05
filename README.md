@@ -1,5 +1,5 @@
 # iOsTodoList
-Swift iOs App using table view for show Todos
+Swift iOs App using UITableView for showing Todos
 
 
 
