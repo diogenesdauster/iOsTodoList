@@ -43,6 +43,7 @@ class ChecklistViewController: UITableViewController {
         if let cell = tableView.cellForRow(at: indexPath) {
             let item = todoList.todos[indexPath.row]
             
+            item.toogle()
             configurateCheckItem(for: cell, with: item)
             tableView.deselectRow(at: indexPath, animated: true)
         }
@@ -61,10 +62,10 @@ class ChecklistViewController: UITableViewController {
         }else{
             cell.accessoryType = .none
         }
-        
-        item.toogle()
     
     }
+    
+    
     
     
     @IBAction func addTodo(_ sender: Any){
