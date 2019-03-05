@@ -18,23 +18,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="ChecklistItem" id="sIm-B9-gxF">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="sIm-B9-gxF">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sIm-B9-gxF" id="4nR-vV-BsU">
-                                    <rect key="frame" x="0.0" y="0.0" width="335" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="307" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1001" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="√" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hPV-Ee-cDK">
+                                            <rect key="frame" x="16" y="10" width="15" height="23"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Spj-g5-XiZ">
-                                            <rect key="frame" x="20" y="12" width="295" height="21"/>
+                                            <rect key="frame" x="39" y="12" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Spj-g5-XiZ" firstAttribute="leading" secondItem="4nR-vV-BsU" secondAttribute="leading" constant="20" symbolic="YES" id="9N9-TQ-7Ls"/>
-                                        <constraint firstAttribute="trailing" secondItem="Spj-g5-XiZ" secondAttribute="trailing" constant="20" symbolic="YES" id="FDz-N6-QDO"/>
+                                        <constraint firstItem="hPV-Ee-cDK" firstAttribute="baseline" secondItem="Spj-g5-XiZ" secondAttribute="firstBaseline" id="0hB-OA-HZL"/>
+                                        <constraint firstItem="hPV-Ee-cDK" firstAttribute="leading" secondItem="4nR-vV-BsU" secondAttribute="leading" constant="16" id="3YP-HR-Zur"/>
+                                        <constraint firstItem="Spj-g5-XiZ" firstAttribute="leading" secondItem="4nR-vV-BsU" secondAttribute="leading" constant="39" id="9N9-TQ-7Ls"/>
+                                        <constraint firstItem="Spj-g5-XiZ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hPV-Ee-cDK" secondAttribute="trailing" constant="8" symbolic="YES" id="BY9-JI-KU9"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Spj-g5-XiZ" secondAttribute="trailing" constant="20" symbolic="YES" id="FDz-N6-QDO"/>
                                         <constraint firstAttribute="bottom" secondItem="Spj-g5-XiZ" secondAttribute="bottom" priority="750" constant="10.5" id="Y0o-Yq-jDe"/>
                                         <constraint firstItem="Spj-g5-XiZ" firstAttribute="top" secondItem="4nR-vV-BsU" secondAttribute="top" priority="750" constant="12" id="uF7-U5-6ke"/>
                                     </constraints>
