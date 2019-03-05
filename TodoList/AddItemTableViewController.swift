@@ -10,11 +10,14 @@ import UIKit
 
 class AddItemTableViewController: UITableViewController {
 
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textfield: UITextField!
+    @IBOutlet weak var barAddButton: UIBarButtonItem!
+    @IBOutlet weak var barCancelButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
+        textfield.delegate = self
     }
 
     @IBAction func cancel(_ sender: Any) {
@@ -27,11 +30,40 @@ class AddItemTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        textField.becomeFirstResponder()
+        textfield.becomeFirstResponder()
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         return nil
     }
+    
+}
+
+extension AddItemTableViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textfield.resignFirstResponder()
+        return false
+    }
+    
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        guard let oldText = textfield.text,
+        let stringRange = Range(range, in: oldText)
+        else {
+            return false
+        }
+        
+        let newText = oldText.replacingCharacters(in: stringRange, with: string)
+        if newText.isEmpty {
+            barAddButton.isEnabled = false
+        }else{
+            barAddButton.isEnabled = true
+        }
+        
+        return true
+    }
+    
     
 }

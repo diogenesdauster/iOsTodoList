@@ -77,12 +77,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hbS-z7-zR2">
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hbS-z7-zR2">
                                                     <rect key="frame" x="7" y="6" width="360" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done:" destination="tPc-ag-Xcv" eventType="editingDidEndOnExit" id="3RK-kp-oaE"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -102,7 +105,7 @@
                                 <action selector="cancel:" destination="tPc-ag-Xcv" id="rFt-6f-gSU"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="eW1-ru-dth">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Add" id="eW1-ru-dth">
                             <connections>
                                 <action selector="done:" destination="tPc-ag-Xcv" id="jKV-Rl-Odu"/>
                             </connections>
@@ -110,7 +113,9 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="textField" destination="hbS-z7-zR2" id="Qcw-OL-3SD"/>
+                        <outlet property="barAddButton" destination="eW1-ru-dth" id="E96-JW-W8x"/>
+                        <outlet property="barCancelButton" destination="qgF-Q7-wjG" id="dIf-1L-MdI"/>
+                        <outlet property="textfield" destination="hbS-z7-zR2" id="cRm-lu-Gie"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z1S-17-2rP" userLabel="First Responder" sceneMemberID="firstResponder"/>
