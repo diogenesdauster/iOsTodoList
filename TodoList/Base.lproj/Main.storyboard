@@ -35,8 +35,8 @@
                                     <constraints>
                                         <constraint firstItem="Spj-g5-XiZ" firstAttribute="leading" secondItem="4nR-vV-BsU" secondAttribute="leading" constant="20" symbolic="YES" id="9N9-TQ-7Ls"/>
                                         <constraint firstAttribute="trailing" secondItem="Spj-g5-XiZ" secondAttribute="trailing" constant="20" symbolic="YES" id="FDz-N6-QDO"/>
-                                        <constraint firstAttribute="bottom" secondItem="Spj-g5-XiZ" secondAttribute="bottom" constant="10.5" id="Y0o-Yq-jDe"/>
-                                        <constraint firstItem="Spj-g5-XiZ" firstAttribute="top" secondItem="4nR-vV-BsU" secondAttribute="top" constant="12" id="uF7-U5-6ke"/>
+                                        <constraint firstAttribute="bottom" secondItem="Spj-g5-XiZ" secondAttribute="bottom" priority="750" constant="10.5" id="Y0o-Yq-jDe"/>
+                                        <constraint firstItem="Spj-g5-XiZ" firstAttribute="top" secondItem="4nR-vV-BsU" secondAttribute="top" priority="750" constant="12" id="uF7-U5-6ke"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
