@@ -8,8 +8,17 @@
 
 import UIKit
 
-class AddItemTableViewController: UITableViewController {
 
+protocol AddItemViewControllerDelegate: class {
+    func addItemViewControllerDidCancel(_ controller: AddItemTableViewController)
+    func additemViewControllerDidFinishAddingItem(_ controller: AddItemTableViewController,
+                                                  didFinishAdding item: ChecklistItem)
+}
+
+class AddItemTableViewController: UITableViewController {
+    
+    weak var delegate: AddItemViewControllerDelegate?
+    
     @IBOutlet weak var textfield: UITextField!
     @IBOutlet weak var barAddButton: UIBarButtonItem!
     @IBOutlet weak var barCancelButton: UIBarButtonItem!
@@ -22,11 +31,18 @@ class AddItemTableViewController: UITableViewController {
 
     @IBAction func cancel(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        delegate?.addItemViewControllerDidCancel(self)
     }
     
     
     @IBAction func done(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+        let item = ChecklistItem()
+        if let textFieldText = textfield.text{
+            item.text = textFieldText
+        }
+        item.checked = false
+        delegate?.additemViewControllerDidFinishAddingItem(self, didFinishAdding: item)
     }
     
     override func viewWillAppear(_ animated: Bool) {
