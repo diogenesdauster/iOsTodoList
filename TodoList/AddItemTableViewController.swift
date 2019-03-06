@@ -13,11 +13,16 @@ protocol AddItemViewControllerDelegate: class {
     func addItemViewControllerDidCancel(_ controller: AddItemTableViewController)
     func additemViewControllerDidFinishAddingItem(_ controller: AddItemTableViewController,
                                                   didFinishAdding item: ChecklistItem)
+    func additemViewControllerDidFinishEditingItem(_ controller: AddItemTableViewController,
+                                                  didFinishEditing item: ChecklistItem)
+
 }
 
 class AddItemTableViewController: UITableViewController {
     
     weak var delegate: AddItemViewControllerDelegate?
+    weak var todoList: TodoList?
+    weak var itemToEdit: ChecklistItem?
     
     @IBOutlet weak var textfield: UITextField!
     @IBOutlet weak var barAddButton: UIBarButtonItem!
@@ -25,27 +30,40 @@ class AddItemTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let item = itemToEdit {
+            title = "Edit Item"
+            textfield.text = item.text
+            barAddButton.isEnabled = true
+        }
         navigationItem.largeTitleDisplayMode = .never
         textfield.delegate = self
     }
 
     @IBAction func cancel(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
         delegate?.addItemViewControllerDidCancel(self)
     }
     
     
     @IBAction func done(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        let item = ChecklistItem()
-        if let textFieldText = textfield.text{
-            item.text = textFieldText
+        
+        if let item = itemToEdit, let text = textfield.text {
+            item.text = text
+            delegate?.additemViewControllerDidFinishEditingItem(self, didFinishEditing: item)
+        } else {
+          if let item = todoList?.newTodo(){
+            if let textFieldText = textfield.text{
+                item.text = textFieldText
+            }
+            item.checked = false
+            delegate?.additemViewControllerDidFinishAddingItem(self, didFinishAdding: item)
+          }
         }
-        item.checked = false
-        delegate?.additemViewControllerDidFinishAddingItem(self, didFinishAdding: item)
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        
+        
         textfield.becomeFirstResponder()
     }
     

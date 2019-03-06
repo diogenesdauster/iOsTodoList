@@ -91,8 +91,18 @@ class ChecklistViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItemSegue" {
-            if let addItem = segue.destination as? AddItemTableViewController  {
-                addItem.delegate = self
+            if let addItemViewController = segue.destination as? AddItemTableViewController  {
+                addItemViewController.delegate = self
+                addItemViewController.todoList = todoList
+            }
+        }else if segue.identifier == "EditItemSegue" {
+            if let addItemViewController = segue.destination as? AddItemTableViewController{
+               if let cell = sender as? UITableViewCell,
+                let indexPath = tableView.indexPath(for: cell) {
+                let item = todoList.todos[indexPath.row]
+                addItemViewController.itemToEdit = item
+                addItemViewController.delegate = self
+              }
             }
         }
     }
@@ -108,10 +118,19 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
     func additemViewControllerDidFinishAddingItem(_ controller: AddItemTableViewController, didFinishAdding item: ChecklistItem) {
         navigationController?.popViewController(animated: true)
         
-        let rowIndex = todoList.todos.count
-        todoList.todos.append(item)
+        let rowIndex = todoList.todos.count - 1
         let indexPaths = IndexPath(row: rowIndex, section: 0)
         tableView.insertRows(at: [indexPaths], with: .automatic)
+    }
+    
+    func additemViewControllerDidFinishEditingItem(_ controller: AddItemTableViewController, didFinishEditing item: ChecklistItem) {
+        if let index = todoList.todos.firstIndex(of: item) {
+            let indexPath = IndexPath(row: index, section: 0)
+            if let cell = tableView.cellForRow(at: indexPath){
+                configurateTextItem(for: cell, with: item)
+            }
+        }
+        navigationController?.popViewController(animated: true)
     }
     
     

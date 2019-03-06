@@ -48,6 +48,9 @@
                                         <constraint firstItem="Spj-g5-XiZ" firstAttribute="top" secondItem="4nR-vV-BsU" secondAttribute="top" priority="750" constant="12" id="uF7-U5-6ke"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="tPc-ag-Xcv" kind="show" identifier="EditItemSegue" trigger="accessoryAction" id="FSt-8S-QnT"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -114,7 +117,7 @@
                                 <action selector="cancel:" destination="tPc-ag-Xcv" id="rFt-6f-gSU"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Add" id="eW1-ru-dth">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Done" id="eW1-ru-dth">
                             <connections>
                                 <action selector="done:" destination="tPc-ag-Xcv" id="jKV-Rl-Odu"/>
                             </connections>
@@ -150,4 +153,7 @@
             <point key="canvasLocation" x="-60" y="-13.043478260869566"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="FSt-8S-QnT"/>
+    </inferredMetricsTieBreakers>
 </document>
