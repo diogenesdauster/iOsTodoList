@@ -91,12 +91,12 @@ class ChecklistViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItemSegue" {
-            if let addItemViewController = segue.destination as? AddItemTableViewController  {
+            if let addItemViewController = segue.destination as? ItemDetailV  {
                 addItemViewController.delegate = self
                 addItemViewController.todoList = todoList
             }
         }else if segue.identifier == "EditItemSegue" {
-            if let addItemViewController = segue.destination as? AddItemTableViewController{
+            if let addItemViewController = segue.destination as? ItemDetailV{
                if let cell = sender as? UITableViewCell,
                 let indexPath = tableView.indexPath(for: cell) {
                 let item = todoList.todos[indexPath.row]
@@ -111,11 +111,11 @@ class ChecklistViewController: UITableViewController {
 
 
 extension ChecklistViewController: AddItemViewControllerDelegate {
-    func addItemViewControllerDidCancel(_ controller: AddItemTableViewController) {
+    func addItemViewControllerDidCancel(_ controller: ItemDetailV) {
         navigationController?.popViewController(animated: true)
     }
     
-    func additemViewControllerDidFinishAddingItem(_ controller: AddItemTableViewController, didFinishAdding item: ChecklistItem) {
+    func additemViewControllerDidFinishAddingItem(_ controller: ItemDetailV, didFinishAdding item: ChecklistItem) {
         navigationController?.popViewController(animated: true)
         
         let rowIndex = todoList.todos.count - 1
@@ -123,7 +123,7 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
         tableView.insertRows(at: [indexPaths], with: .automatic)
     }
     
-    func additemViewControllerDidFinishEditingItem(_ controller: AddItemTableViewController, didFinishEditing item: ChecklistItem) {
+    func additemViewControllerDidFinishEditingItem(_ controller: ItemDetailV, didFinishEditing item: ChecklistItem) {
         if let index = todoList.todos.firstIndex(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath){
