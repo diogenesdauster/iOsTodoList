@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="sIm-B9-gxF">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="detailDisclosureButton" indentationWidth="10" reuseIdentifier="ChecklistItem" id="sIm-B9-gxF" customClass="CheckmarkTableViewCell" customModule="TodoList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sIm-B9-gxF" id="4nR-vV-BsU">
@@ -49,6 +49,8 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="checkmark" destination="hPV-Ee-cDK" id="Xsv-Rq-juc"/>
+                                    <outlet property="labelText" destination="Spj-g5-XiZ" id="Uzh-QT-6BS"/>
                                     <segue destination="tPc-ag-Xcv" kind="show" identifier="EditItemSegue" trigger="accessoryAction" id="FSt-8S-QnT"/>
                                 </connections>
                             </tableViewCell>
@@ -74,7 +76,7 @@
         <!--Add Item-->
         <scene sceneID="TLP-im-OUZ">
             <objects>
-                <tableViewController id="tPc-ag-Xcv" customClass="ItemDetailV" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="tPc-ag-Xcv" customClass="ItemDetailViewController" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="Ek3-5q-Vdx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

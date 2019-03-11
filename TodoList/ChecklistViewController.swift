@@ -22,9 +22,22 @@ class ChecklistViewController: UITableViewController {
         super.init(coder: aDecoder)
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = editButtonItem
     }
     
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(tableView.isEditing, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        todoList.move(item: todoList.todos[sourceIndexPath.row], to: destinationIndexPath.row)
+        tableView.reloadData()
+    }
 
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoList.todos.count
     }
@@ -58,21 +71,21 @@ class ChecklistViewController: UITableViewController {
     }
     
     func configurateTextItem(for cell: UITableViewCell, with item: ChecklistItem ){
-        if let label = cell.viewWithTag(1000) as? UILabel {
-            label.text = item.text
+        if let checkmark = cell as? CheckmarkTableViewCell {
+            checkmark.labelText.text = item.text
         }
     }
     
     func configurateCheckItem(for cell:UITableViewCell, with item: ChecklistItem){
         
-        guard let checkmark  = cell.viewWithTag(1001) as? UILabel else {
+        guard let checkmark  = cell as? CheckmarkTableViewCell else {
             return
         }
         
         if item.checked  {
-            checkmark.text = "√"
+            checkmark.checkmark.text = "√"
         }else{
-            checkmark.text = ""
+            checkmark.checkmark.text = ""
         }
         
     }
@@ -91,12 +104,12 @@ class ChecklistViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddItemSegue" {
-            if let addItemViewController = segue.destination as? ItemDetailV  {
+            if let addItemViewController = segue.destination as? ItemDetailViewController  {
                 addItemViewController.delegate = self
                 addItemViewController.todoList = todoList
             }
         }else if segue.identifier == "EditItemSegue" {
-            if let addItemViewController = segue.destination as? ItemDetailV{
+            if let addItemViewController = segue.destination as? ItemDetailViewController{
                if let cell = sender as? UITableViewCell,
                 let indexPath = tableView.indexPath(for: cell) {
                 let item = todoList.todos[indexPath.row]
@@ -110,12 +123,12 @@ class ChecklistViewController: UITableViewController {
 }
 
 
-extension ChecklistViewController: AddItemViewControllerDelegate {
-    func addItemViewControllerDidCancel(_ controller: ItemDetailV) {
+extension ChecklistViewController: ItemDetailViewControllerDelegate {
+    func ItemDetailViewControllerDidCancel(_ controller: ItemDetailViewController) {
         navigationController?.popViewController(animated: true)
     }
     
-    func additemViewControllerDidFinishAddingItem(_ controller: ItemDetailV, didFinishAdding item: ChecklistItem) {
+    func ItemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
         navigationController?.popViewController(animated: true)
         
         let rowIndex = todoList.todos.count - 1
@@ -123,8 +136,8 @@ extension ChecklistViewController: AddItemViewControllerDelegate {
         tableView.insertRows(at: [indexPaths], with: .automatic)
     }
     
-    func additemViewControllerDidFinishEditingItem(_ controller: ItemDetailV, didFinishEditing item: ChecklistItem) {
-        if let index = todoList.todos.firstIndex(of: item) {
+    func ItemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
+        if let index = todoList.todos.index(of: item) {
             let indexPath = IndexPath(row: index, section: 0)
             if let cell = tableView.cellForRow(at: indexPath){
                 configurateTextItem(for: cell, with: item)
