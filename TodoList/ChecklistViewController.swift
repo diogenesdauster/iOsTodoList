@@ -15,15 +15,17 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.leftBarButtonItem = editButtonItem
+        tableView.allowsMultipleSelectionDuringEditing = true
     }
+    
     
     required init?(coder aDecoder: NSCoder) {
         todoList = TodoList()
         super.init(coder: aDecoder)
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationItem.leftBarButtonItem = editButtonItem
     }
+    
     
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -53,9 +55,13 @@ class ChecklistViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if tableView.isEditing {
+            return
+        }
+        
         if let cell = tableView.cellForRow(at: indexPath) {
             let item = todoList.todos[indexPath.row]
-            
             item.toogle()
             configurateCheckItem(for: cell, with: item)
             tableView.deselectRow(at: indexPath, animated: true)
@@ -91,6 +97,18 @@ class ChecklistViewController: UITableViewController {
     }
     
     
+    @IBAction func deleteItems(_ sender: Any) {
+        if let selectedItems = tableView.indexPathsForSelectedRows {
+            var items = [ChecklistItem]()
+            for indexpath in selectedItems {
+                items.append(todoList.todos[indexpath.row])
+            }
+            todoList.remove(items: items)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: selectedItems, with: .automatic)
+            tableView.endUpdates()
+        }
+    }
     
     
     @IBAction func addTodo(_ sender: Any){
