@@ -11,6 +11,7 @@ import UIKit
 class ChecklistViewController: UITableViewController {
     
     var todoList: TodoList
+    var tableData: [[ChecklistItem?]?]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,19 @@ class ChecklistViewController: UITableViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.leftBarButtonItem = editButtonItem
         tableView.allowsMultipleSelectionDuringEditing = true
+        
+        let sectionTitleCount = UILocalizedIndexedCollation.current().sectionTitles.count
+        var allSections = [[ChecklistItem?]?](repeating: nil, count: sectionTitleCount)
+        var sectionNumber = 0
+        let collation = UILocalizedIndexedCollation.current()
+        for item in todoList.todos{
+            sectionNumber = collation.section(for: item, collationStringSelector: #selector(getter: ChecklistItem.text))
+            if allSections[sectionNumber] == nil {
+                allSections[sectionNumber] = [ChecklistItem?]()
+            }
+            allSections[sectionNumber]!.append(item)
+        }
+        tableData = allSections
     }
     
     
