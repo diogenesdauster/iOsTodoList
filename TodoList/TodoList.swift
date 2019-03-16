@@ -13,6 +13,7 @@ class TodoList {
         case high, medium, low, no
     }
     
+    
     private var highPriorityTodos:[ChecklistItem] = []
     private var mediumPriorityTodos:[ChecklistItem] = []
     private var lowPriorityTodos:[ChecklistItem] = []
@@ -34,10 +35,10 @@ class TodoList {
 
         
         addTodo(row01Item,for: .medium)
-        addTodo(row02Item,for: .medium)
-        addTodo(row03Item,for: .medium)
-        addTodo(row04Item,for: .medium)
-        addTodo(row05Item,for: .medium)
+        addTodo(row02Item,for: .low)
+        addTodo(row03Item,for: .high)
+        addTodo(row04Item,for: .no)
+        addTodo(row05Item,for: .high)
     }
     
     func addTodo(_ item: ChecklistItem, for priority: Priority) {

@@ -94,16 +94,22 @@ class ChecklistViewController: UITableViewController {
         return TodoList.Priority.allCases.count
     }
     
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        return UILocalizedIndexedCollation.current().sectionTitles
-    }
-    
-    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
-        return UILocalizedIndexedCollation.current().section(forSectionIndexTitle: index)
-    }
-    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return UILocalizedIndexedCollation.current().sectionTitles[section]
+        var title: String? = nil
+        if let priority = priorityForSectionIndex(section){
+            switch priority {
+            case .high:
+                title = "High Priority Todos"
+            case .medium:
+                title = "Medium Priority Todos"
+            case .low:
+                title = "Low Priority Todos"
+            case .no:
+                title = "No Priority Todos"
+
+            }
+        }
+        return title
     }
     
     func configurateTextItem(for cell: UITableViewCell, with item: ChecklistItem ){
@@ -132,8 +138,9 @@ class ChecklistViewController: UITableViewController {
             for indexpath in selectedItems {
                 if let priority = priorityForSectionIndex(indexpath.section) {
                     let todos = todoList.todoList(for: priority)
-                    let item = todos[indexpath.row]
-                    todoList.remove(item, from: priority, at: indexpath.row)
+                    let index = indexpath.row > todos.count - 1 ? todos.count - 1 : indexpath.row
+                    let item = todos[index]
+                    todoList.remove(item, from: priority, at: index)
                     
                 }
             }
@@ -148,7 +155,7 @@ class ChecklistViewController: UITableViewController {
         let newRowIndex = todoList.todoList(for: .medium).count
         _ = todoList.newTodo()
         
-        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPath = IndexPath(row: newRowIndex, section: TodoList.Priority.medium.rawValue)
         tableView.insertRows(at: [indexPath], with: .automatic)
         
     }
@@ -182,16 +189,19 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate {
     func ItemDetailViewController(_ controller: ItemDetailViewController, didFinishAdding item: ChecklistItem) {
         navigationController?.popViewController(animated: true)
         
-        let rowIndex = todoList.todos.count - 1
-        let indexPaths = IndexPath(row: rowIndex, section: 0)
-        tableView.insertRows(at: [indexPaths], with: .automatic)
+        let rowIndex = todoList.todoList(for: .medium).count - 1
+        let indexPath = IndexPath(row: rowIndex, section: TodoList.Priority.medium.rawValue)
+        tableView.insertRows(at: [indexPath], with: .automatic)
     }
     
     func ItemDetailViewController(_ controller: ItemDetailViewController, didFinishEditing item: ChecklistItem) {
-        if let index = todoList.todos.index(of: item) {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath){
-                configurateTextItem(for: cell, with: item)
+        for priority in TodoList.Priority.allCases {
+            let currentList = todoList.todoList(for: priority)
+            if let index = currentList.index(of: item){
+                let indexPath = IndexPath(item: index, section: priority.rawValue)
+                if let cell = tableView.cellForRow(at: indexPath){
+                    configurateTextItem(for: cell, with: item)
+                }
             }
         }
         navigationController?.popViewController(animated: true)
