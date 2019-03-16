@@ -9,7 +9,7 @@
 import Foundation
 
 class TodoList {
-    enum Priority {
+    enum Priority: Int, CaseIterable {
         case high, medium, low, no
     }
     
