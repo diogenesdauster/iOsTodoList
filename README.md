@@ -4,6 +4,7 @@ Swift iOs App using UITableView for showing Todos
 
 ### Features :
 * Add Todo
+* Mark Todo
 * Delete Todo with swipe
 * Todo by section priority
 * Mutiple Selection to delete Todo
