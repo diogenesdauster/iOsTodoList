@@ -23,21 +23,10 @@ class ChecklistViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem
         tableView.allowsMultipleSelectionDuringEditing = true
         
-        //        let sectionTitleCount = UILocalizedIndexedCollation.current().sectionTitles.count
-        //        var allSections = [[ChecklistItem?]?](repeating: nil, count: sectionTitleCount)
-        //        var sectionNumber = 0
-        //        let colletion = UILocalizedIndexedCollation.current()
-        //        for item in todoList.todos {
-        //            sectionNumber = colletion.section(for: item, collationStringSelector: #selector(getter:ChecklistItem.name))
-        //            if allSections[sectionNumber] == nil {
-        //                allSections[sectionNumber] = [ChecklistItem?]()
-        //            }
-        //            allSections[sectionNumber]!.append(item)
-        //        }
-        //
-        //        tableData = allSections
+
         
     }
+    
     
     @IBAction func deleteRows(_ sender: Any) {
         if let selectedRows = tableView.indexPathsForSelectedRows {
@@ -163,6 +152,8 @@ class ChecklistViewController: UITableViewController {
             }
         }
         
+        todoList.saveTodoOnPlist()
+        
         
     }
     
@@ -218,17 +209,17 @@ class ChecklistViewController: UITableViewController {
         return !tableView.isEditing
     }
     
-    @IBAction func addItem(_ sender: UIBarButtonItem) {
-        
-        let newTodo = todoList.todoList(for: .medium).count
-        
-        _ = todoList.newTodo()
-        
-        let indexPath = IndexPath(row: newTodo, section: 0)
-        
-        tableView.insertRows(at: [indexPath], with: .automatic)
-        
-    }
+//    @IBAction func addItem(_ sender: UIBarButtonItem) {
+//        
+//        let newTodo = todoList.todoList(for: .medium).count
+//        
+//        _ = todoList.newTodo()
+//        
+//        let indexPath = IndexPath(row: newTodo, section: 0)
+//        
+//        tableView.insertRows(at: [indexPath], with: .automatic)
+//        
+//    }
     
 }
 
@@ -263,6 +254,8 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate {
             
             
         }
+        
+        todoList.saveTodoOnPlist()
         
         
     }

@@ -8,59 +8,130 @@
 
 import Foundation
 
-class TodoList {
+let todoDirectoryURL = URL(fileURLWithPath: "todos", relativeTo: FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]).appendingPathExtension("plist")
+
+class TodoList: Codable {
     
     enum Priority: Int, CaseIterable {
         case high, medium, low, no
     }
     
-    private var highPriority: [ChecklistItem] = []
-    private var mediumPriority: [ChecklistItem] = []
-    private var lowPriority: [ChecklistItem] = []
-    private var noPriority: [ChecklistItem] = []
+    private var highPriority: [ChecklistItem] = [] {
+        didSet {
+            saveTodoOnPlist()
+        }
+    }
+    private var mediumPriority: [ChecklistItem] = [] {
+        didSet {
+            saveTodoOnPlist()
+        }
+    }
+    private var lowPriority: [ChecklistItem] = [] {
+        didSet {
+            saveTodoOnPlist()
+        }
+    }
+    
+    private var noPriority: [ChecklistItem] = [] {
+        didSet {
+            saveTodoOnPlist()
+        }
+    }
     
     //var todos: [ChecklistItem]
     
     init() {
         
-        let row0Item = ChecklistItem()
-        let row1Item = ChecklistItem()
-        let row2Item = ChecklistItem()
-        let row3Item = ChecklistItem()
-        let row4Item = ChecklistItem()
-        let row5Item = ChecklistItem()
-        let row6Item = ChecklistItem()
-        let row7Item = ChecklistItem()
-        let row8Item = ChecklistItem()
-        let row9Item = ChecklistItem()
+        if FileManager.default.fileExists(atPath: todoDirectoryURL.path) {
+            loadTodoFromPlist()
+        } else {
+            
+            let row0Item = ChecklistItem()
+            let row1Item = ChecklistItem()
+            let row2Item = ChecklistItem()
+            let row3Item = ChecklistItem()
+            let row4Item = ChecklistItem()
+            let row5Item = ChecklistItem()
+            let row6Item = ChecklistItem()
+            let row7Item = ChecklistItem()
+            let row8Item = ChecklistItem()
+            let row9Item = ChecklistItem()
+            
+            
+            row0Item.name =  "Take a Job"
+            row1Item.name =  "Watch a movie"
+            row2Item.name =  "Code an app"
+            row3Item.name =  "Walk the dog"
+            row4Item.name =  "Study design patterns"
+            row5Item.name =  "Take a Nap"
+            row6Item.name =  "Plan vacation"
+            row7Item.name =  "Play Soccer"
+            row8Item.name =  "Find a New Job"
+            row9Item.name =  "Look for a girl friend"
+            
+            
+            addTodo(row0Item, for: .medium)
+            addTodo(row1Item, for: .high)
+            addTodo(row2Item, for: .low)
+            addTodo(row3Item, for: .no)
+            addTodo(row4Item, for: .medium)
+            addTodo(row5Item, for: .medium)
+            addTodo(row6Item, for: .high)
+            addTodo(row7Item, for: .low)
+            addTodo(row8Item, for: .no)
+            addTodo(row9Item, for: .medium)
+            
+            saveTodoOnPlist()
+        }
         
+    }
+    
+    
+    init(highPriority: [ChecklistItem], mediumPriority: [ChecklistItem], lowPriority: [ChecklistItem],
+         noPriority: [ChecklistItem]) {
         
-        row0Item.name =  "Take a Job"
-        row1Item.name =  "Watch a movie"
-        row2Item.name =  "Code an app"
-        row3Item.name =  "Walk the dog"
-        row4Item.name =  "Study design patterns"
+        self.highPriority = highPriority
+        self.mediumPriority = mediumPriority
+        self.lowPriority = lowPriority
+        self.noPriority = noPriority
         
-        row5Item.name =  "Take a Nap"
-        row6Item.name =  "Plan vacation"
-        row7Item.name =  "Play Soccer"
-        row8Item.name =  "Find a New Job"
-        row9Item.name =  "Look for a girl friend"
+    }
+    
+    private func loadTodoFromPlist() {
         
-        
-        addTodo(row0Item, for: .medium)
-        addTodo(row1Item, for: .high)
-        addTodo(row2Item, for: .low)
-        addTodo(row3Item, for: .no)
-        addTodo(row4Item, for: .medium)
-        addTodo(row5Item, for: .medium)
-        addTodo(row6Item, for: .high)
-        addTodo(row7Item, for: .low)
-        addTodo(row8Item, for: .no)
-        addTodo(row9Item, for: .medium)
+        do {
+            
+            let plistDecoder = PropertyListDecoder()
+            let plistData = try Data(contentsOf: todoDirectoryURL)
+            let todoList = try plistDecoder.decode(TodoList.self, from: plistData)
+            
+            self.highPriority = todoList.highPriority
+            self.mediumPriority = todoList.mediumPriority
+            self.lowPriority = todoList.lowPriority
+            self.noPriority = todoList.noPriority
+            
+        } catch {
+            print(error)
+        }
         
         
     }
+    
+    func saveTodoOnPlist() {
+        
+        do {
+            
+            let plistEncoder = PropertyListEncoder()
+            let plistData = try plistEncoder.encode(self)
+            try plistData.write(to: todoDirectoryURL, options: .atomic)
+            
+        } catch {
+            print(error)
+        }
+        
+        
+    }
+    
     
     func addTodo(_ item: ChecklistItem, for priority: Priority, at index: Int = -1) {
         switch priority {
@@ -109,14 +180,14 @@ class TodoList {
         let newTodo = ChecklistItem()
         newTodo.name = randomText()
         newTodo.checked = true
-        mediumPriority.append(newTodo)
+        //mediumPriority.append(newTodo)
         return newTodo
     }
+
     
     func move(item: ChecklistItem, from sourcePriority: Priority, at sourceIndex: Int, to destonationPriority: Priority, at destinationIndex: Int) {
         remove(item, from: sourcePriority, at: sourceIndex)
         addTodo(item, for: destonationPriority, at: destinationIndex)
-        
     }
     
     func remove(_ item: ChecklistItem, from priority: Priority,at index: Int) {
@@ -131,9 +202,8 @@ class TodoList {
         case .no:
             noPriority.remove(at: index)
         }
-        
     }
-
+    
     
     func randomText() -> String {
         let titles = ["Fale baixo", "Tomar uma bicada", "Sonhar é gratis" ,"Carai de Asa"]

@@ -41,6 +41,7 @@ class ItemDetailViewController: UITableViewController {
                     item.name = textFieldText
                 }
                 item.checked = false
+                todoList?.addTodo(item, for: .medium)
                 delegate?.itemDetailViewController(self ,didFinishAdding: item)
             }
         }

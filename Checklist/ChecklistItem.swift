@@ -9,9 +9,18 @@
 import Foundation
 
 
-class ChecklistItem: NSObject {
+class ChecklistItem: NSObject, Codable {
     @objc var name = ""
     var checked = false
+    
+    
+    init(name: String, checked: Bool) {
+        self.name = name
+        self.checked = checked
+    }
+    
+    override init() {
+    }
     
     func toogleChecked() {
         checked = !checked

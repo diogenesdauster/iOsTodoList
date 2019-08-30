@@ -32,7 +32,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1000" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHO-C5-nJ7">
-                                            <rect key="frame" x="53" y="22" width="296" height="22"/>
+                                            <rect key="frame" x="53" y="22" width="42" height="22"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -40,7 +40,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="ZKR-4K-PFL" firstAttribute="leading" secondItem="UjO-a3-vGI" secondAttribute="leadingMargin" id="3El-9p-Hw6"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="UHO-C5-nJ7" secondAttribute="trailing" constant="12" id="KA9-A8-iyf"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="UHO-C5-nJ7" secondAttribute="trailing" constant="12" id="KA9-A8-iyf"/>
                                         <constraint firstItem="ZKR-4K-PFL" firstAttribute="top" secondItem="UHO-C5-nJ7" secondAttribute="top" id="NVd-J4-BhA"/>
                                         <constraint firstItem="UHO-C5-nJ7" firstAttribute="leading" secondItem="ZKR-4K-PFL" secondAttribute="trailing" constant="18" id="Phx-ag-mVH"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="ZKR-4K-PFL" secondAttribute="bottom" constant="5.5" id="bXT-en-kx1"/>
