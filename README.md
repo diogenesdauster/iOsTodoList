@@ -9,6 +9,7 @@ Swift iOs App using UITableView for showing Todos
 * Todo by section priority
 * Mutiple Selection to delete Todo
 * Move Todo between sections
+* Saving Todo using plist 
 
 ### ScreenShots
 
